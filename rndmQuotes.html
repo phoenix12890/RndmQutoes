@@ -1,0 +1,188 @@
+<!-- Write a program to generate a quote randomly and display it on the web page in a proper format. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Quotes</title>
+  <!-- Bootstrap CDN links and googlr font api links -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Links end -->
+  
+  <!-- CSS styling -->
+  <style>
+	body,h1,h2,h3,h4,h5,h6,p
+	 { font-family: 'Raleway', sans-serif;
+	}
+
+	h1{font-size:35px;}
+	h2{font-size:30px;}
+	h3{font-size:25px;}
+	p {font-size:16px;}
+
+	body {background:#490A3D;transition:0.7s;
+	  -webkit-transition:0.7s;}
+	.quotemark {
+		position: relative;
+		top: -12px;
+		padding-right: 10px;
+	}
+
+	blockquote {
+	  border-left: 10px solid;
+	  border-color:#490A3D;
+	  margin: 30px 10px;
+	  padding: 10px 30px;
+	  transition:0.7s;
+	  -webkit-transition:0.7s;
+	}
+	blockquote h1, h2, h3, p{
+	  display: inline;
+	}
+	blockquote footer {
+		font-size:18px;
+		text-align:right;
+	}
+	
+	blockquote{
+		color:#490A3D;
+	}
+	
+	.container {
+		max-height:800px;
+		margin: 10% auto auto auto;
+	}
+	.quotebox {
+		background:#fff;
+		max-width:500px;
+		min-height:100px;
+		border:1px solid #222;
+		border-radius:5px;
+		margin:10px;
+	}
+
+	.quotebutton {
+		padding:5px;
+	}
+		#quotesource{margin-top:20px}
+
+	.btn {margin-bottom:10px}
+	.button {
+		width: 100px;
+		height: 40px;
+		border:none;
+		color:#fff;
+		border-radius:5px;
+		background:#490A3D;
+		margin-bottom:3%;
+		}
+	.button:hover{
+		background:#490A3D;
+		box-shadow:5px 5px 10px #000;
+		transition:0.4s;
+	}
+	.by{
+		position:absolute;
+		bottom:2%;
+		right:2%;
+		color:rgba(255,255,255,0.7);
+	}
+
+	@media only screen and (max-width: 768px){  
+		#quotetext {font-size:25px; }
+		.container {	margin-right:20px;}
+		}
+		
+	@media only screen and (max-width: 450px){  
+		#quotetext {font-size:18px; }
+		.button:hover{
+			box-shadow:none;
+		}
+    }
+  </style>
+  <!-- Styling end -->
+  
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-3"></div>
+			<div class="col-xs-12 col-sm-6 quotebox">
+				<div class="row">
+					<div class="col-xs-12">
+						<blockquote>
+							<i class="fa fa-quote-left quotemark"></i>
+							<h2 id="quotetext">Be the change that you wish to see in the world.</h2>
+							<footer id="quotesource">- Mahatma Gandhi</footer>
+						</blockquote>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12">
+						<div class="quotebutton"><button class="button" id="newquote" onclick="generator()">Quote</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-3"></div>
+		</div>
+	</div>
+	
+	<abbr class="by" title="Prithvi Sandeep S">By Prithvi</abbr>
+	
+	<!-- JavaScript code -->
+	<script>
+	 k = fetch('https://type.fit/api/quotes')
+		.then(response=>response.json());
+		var colors = [
+			'#490A3D',
+			'#BD1550',
+			'#E97F02',
+			'#8A9B0F',
+			'#69D2E7',
+			'#FA6900',
+			'#16a085',
+			'#27ae60',
+			'#2c3e50',
+			'#f39c12',
+			'#e74c3c',
+			'#9b59b6',
+			'#FB6964',
+			'#342224',
+			'#472E32',
+			'#77B1A9',
+			'#73A857'
+		];
+		function generator(){
+		  num = Math.floor(Math.random()*1643)
+		  colorNum = Math.floor(Math.random()*15)
+		  k.then(data=>{
+					document.querySelector('#quotetext').innerHTML = `${data[num]['text']} <br><br>`;
+					if(data[num]['author'] === null){
+						document.querySelector('#quotesource').innerHTML = "- Anonymus";
+					}
+					else{
+						document.querySelector('#quotesource').innerHTML = `- ${data[num]['author']}`;
+					}
+					document.querySelector('body').style.background = `${colors[colorNum]}`;
+					document.querySelector('blockquote').style.color = `${colors[colorNum]}`;
+					document.querySelector('blockquote').style.borderColor = `${colors[colorNum]}`;
+					document.querySelector('.button').style.background = `${colors[colorNum]}`;
+		  });
+		}
+	</script>
+	<!-- Script end -->
+	
+	<!-- jQuery and JS bootstrap links -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<!-- Links end -->
+
+</body>
+</html>
